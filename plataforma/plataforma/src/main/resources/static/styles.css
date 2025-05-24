@@ -1,0 +1,275 @@
+/* styles.css */
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fonte moderna e tecnológica */
+body {
+    font-family: 'Poppins', sans-serif; /* Fonte moderna */
+    background-color: #0A192F; /* Azul escuro */
+    color: #FFFFFF; /* Texto branco */
+    line-height: 1.6;
+}
+
+/* Cabeçalho */
+header {
+    background-color: #0A192F; /* Azul escuro */
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 2px solid #FFA500; /* Laranja */
+}
+
+header h1 {
+    font-size: 2.5rem;
+.auth-container {
+    color: #FFA500; /* Laranja */
+}
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: #FFFFFF; /* Branco */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #FFA500; /* Laranja ao passar o mouse */
+}
+
+/* Seções */
+section {
+    padding: 30px;
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #112240; /* Azul um pouco mais claro */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+section h2 {
+    font-size: 2rem;
+    color: #FFA500; /* Laranja */
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+section p {
+    color: #CCD6F6; /* Branco mais suave */
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* Formulários */
+form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 2px solid #FFA500; /* Laranja */
+    background-color: #0A192F; /* Azul escuro */
+    color: #FFFFFF; /* Texto branco */
+    font-size: 1rem;
+    resize: vertical;
+}
+
+form button {
+    padding: 12px 25px;
+    background-color: #FFA500; /* Laranja */
+    color: #0A192F; /* Azul escuro */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #FF8C00; /* Laranja mais escuro */
+}
+
+/* Listas de dúvidas, desafios e ranking */
+#lista-duvidas, #lista-desafios, #lista-ranking {
+    margin-top: 20px;
+}
+
+.duvida, .desafio, .user {
+    background-color: #0A192F; /* Azul escuro */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #233554; /* Azul mais claro */
+    color: #CCD6F6; /* Branco mais suave */
+}
+
+.duvida p, .desafio p, .user p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.duvida button, .desafio button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #FFA500; /* Laranja */
+    color: #0A192F; /* Azul escuro */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.duvida button:hover, .desafio button:hover {
+    background-color: #FF8C00; /* Laranja mais escuro */
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #0A192F; /* Azul escuro */
+    color: #FFA500; /* Laranja */
+    border-top: 2px solid #FFA500; /* Laranja */
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    section {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    section h2 {
+        font-size: 1.5rem;
+    }
+
+    form textarea {
+        font-size: 0.9rem;
+    }
+
+    form button {
+        font-size: 0.9rem;
+    }
+}
+/* Estilos gerais */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0A192F; /* Azul escuro */
+    color: #FFFFFF; /* Texto branco */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #0A192F; /* Azul escuro */
+    color: #FFA500; /* Laranja */
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #FFA500; /* Laranja */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: #FFFFFF; /* Branco */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #FFA500; /* Laranja ao passar o mouse */
+}
+
+/* Container de autenticação (login e registro) */
+.auth-container {
+    background-color: #112240; /* Azul um pouco mais claro */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 2px solid #FFA500; /* Laranja */
+    background-color: #0A192F; /* Azul escuro */
+    color: #FFFFFF; /* Texto branco */
+    font-size: 1rem;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFA500; /* Laranja */
+    color: #0A192F; /* Azul escuro */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.auth-container button:hover {
+    background-color: #FF8C00; /* Laranja mais escuro */
+}
+
+.auth-container p {
+    margin-top: 15px;
+}
+
+.auth-container a {
+    color: #FFA500;}

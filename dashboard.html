@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevPoints | O Fórum dos Devs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --space-cadet: #2B2D42;
+            --neon-blue: #06D6A0;
+            --cyber-yellow: #FFD166;
+            --futuristic-pink: #EF476F;
+            --matrix-green: #0AFF00;
+            --dark-matter: #0D0221;
+            --starship: #FCFCFC;
+            --electron-blue: #00A6FB;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-matter);
+            color: var(--starship);
+            font-family: 'Oxanium', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(11, 227, 227, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(239, 71, 111, 0.05) 0%, transparent 20%);
+        }
+
+        /* Efeitos de animação */
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 var(--neon-blue), -2px 0 var(--futuristic-pink); }
+            25% { text-shadow: -2px 0 var(--neon-blue), 2px 0 var(--futuristic-pink); }
+            50% { text-shadow: 2px 0 var(--futuristic-pink), -2px 0 var(--neon-blue); }
+            75% { text-shadow: -2px 0 var(--futuristic-pink), 2px 0 var(--neon-blue); }
+            100% { text-shadow: 2px 0 var(--neon-blue), -2px 0 var(--futuristic-pink); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Layout principal */
+        header {
+            background: linear-gradient(135deg, rgba(43, 45, 66, 0.9) 0%, rgba(13, 2, 33, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--neon-blue);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(6, 214, 160, 0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2rem;
+            color: var(--neon-blue);
+            text-decoration: none;
+            animation: glitch 2s infinite;
+            position: relative;
+        }
+
+        .logo::after {
+            content: "_";
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--starship);
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--futuristic-pink);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .user-panel {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+            object-fit: cover;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        .points-badge {
+            background: linear-gradient(135deg, var(--futuristic-pink), var(--cyber-yellow));
+            color: var(--dark-matter);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            animation: pulse 2s infinite;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(43, 45, 66, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(6, 214, 160, 0.3);
+            box-shadow: 0 0 30px rgba(6, 214, 160, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-title {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--neon-blue);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .sidebar-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), transparent);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--neon-blue);
+            border-radius: 20px;
+            margin: 0.3rem;
+            font-size: 0.8rem;
+            border: 1px solid var(--neon-blue);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tag:hover {
+            background-color: var(--neon-blue);
+            color: var(--dark-matter);
+            transform: translateY(-2px);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Cards de perguntas */
+        .question-card {
+            background: rgba(43, 45, 66, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(239, 71, 111, 0.3);
+            box-shadow: 0 0 20px rgba(239, 71, 111, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--futuristic-pink), var(--cyber-yellow));
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(239, 71, 111, 0.2);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .question-title {
+            font-size: 1.3rem;
+            color: var(--starship);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .question-body {
+            color: rgba(252, 252, 252, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .question-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 209, 102, 0.2);
+            padding-top: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .username {
+            font-weight: bold;
+            color: var(--cyber-yellow);
+            cursor: pointer;
+        }
+
+        .username:hover {
+            text-decoration: underline;
+        }
+
+        .question-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+            color: rgba(252, 252, 252, 0.7);
+        }
+
+        .stat svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--neon-blue);
+        }
+
+        /* Botões */
+        .ask-btn {
+            background: linear-gradient(135deg, var(--futuristic-pink), var(--cyber-yellow));
+            color: var(--dark-matter);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(239, 71, 111, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .ask-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(239, 71, 111, 0.6);
+        }
+
+        .action-btn {
+            background: rgba(0, 166, 251, 0.1);
+            color: var(--electron-blue);
+            border: 1px solid var(--electron-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .action-btn:hover {
+            background: var(--electron-blue);
+            color: var(--dark-matter);
+        }
+
+        /* Modais */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(13, 2, 33, 0.9);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(43, 45, 66, 0.95), rgba(13, 2, 33, 0.95));
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 40px rgba(6, 214, 160, 0.3);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--starship);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--futuristic-pink);
+        }
+
+        /* Formulários */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--neon-blue);
+            font-weight: bold;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background-color: rgba(6, 214, 160, 0.1);
+            border: 1px solid var(--neon-blue);
+            border-radius: 5px;
+            color: var(--starship);
+            font-family: 'Oxanium', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--futuristic-pink);
+            box-shadow: 0 0 10px rgba(239, 71, 111, 0.3);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--neon-blue), var(--matrix-green));
+            color: var(--dark-matter);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(6, 214, 160, 0.4);
+        }
+
+        .login-switch {
+            text-align: center;
+            margin-top: 1rem;
+            color: rgba(252, 252, 252, 0.7);
+        }
+
+        .login-switch a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-switch a:hover {
+            text-decoration: underline;
+        }
+
+        /* Seção de respostas */
+        .answers-section {
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 209, 102, 0.2);
+            padding-top: 1.5rem;
+        }
+
+        .answers-title {
+            color: var(--neon-blue);
+            margin-bottom: 1rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .answer-card {
+            background: rgba(43, 45, 66, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--electron-blue);
+        }
+
+        .answer-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-body {
+            color: rgba(252, 252, 252, 0.8);
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Efeito de terminal */
+        .terminal-effect {
+            position: relative;
+        }
+
+        .terminal-effect::before {
+            content: '> ';
+            color: var(--matrix-green);
+            position: absolute;
+            left: -20px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: 2;
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .question-header, .question-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .question-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo">DevPoints</a>
+            <div class="nav-links">
+                <a href="#" class="active">Explorar</a>
+                <a href="#">Tags</a>
+                <a href="#">Ranking</a>
+                <a href="#">Blog</a>
+            </div>
+            <div class="user-panel">
+                <div class="points-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    <span id="user-points">0</span>
+                </div>
+                <img src="https://i.pravatar.cc/150?img=3" alt="Avatar" class="avatar" id="user-avatar">
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3 class="sidebar-title">TAGS POPULARES</h3>
+            <div class="tags-container">
+                <span class="tag">javascript</span>
+                <span class="tag">react</span>
+                <span class="tag">nodejs</span>
+                <span class="tag">python</span>
+                <span class="tag">docker</span>
+                <span class="tag">typescript</span>
+                <span class="tag">mongodb</span>
+                <span class="tag">postgresql</span>
+                <span class="tag">git</span>
+                <span class="tag">api</span>
+            </div>
+
+            <h3 class="sidebar-title" style="margin-top: 2rem;">LEADERBOARD</h3>
+            <div class="leaderboard">
+                <div class="leaderboard-item">
+                    <span>1. @dev_master</span>
+                    <span>5,248 pts</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span>2. @code_wizard</span>
+                    <span>4,876 pts</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span>3. @byte_me</span>
+                    <span>4,521 pts</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <button class="ask-btn" id="open-question-modal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5V19M5 12H19"/>
+                </svg>
+                NOVA PERGUNTA
+            </button>
+
+            <div id="questions-feed">
+                <!-- Perguntas serão carregadas aqui dinamicamente -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Nova Pergunta -->
+    <div class="modal" id="question-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-question-modal">&times;</button>
+            <h2 style="color: var(--neon-blue); margin-bottom: 1.5rem;">Nova Pergunta</h2>
+            <form id="question-form">
+                <div class="form-group">
+                    <label for="question-title" class="form-label">Título</label>
+                    <input type="text" id="question-title" class="form-input terminal-effect" placeholder="Seja específico (ex: 'Erro ao compilar React com Webpack')" required>
+                </div>
+                <div class="form-group">
+                    <label for="question-body" class="form-label">Detalhes</label>
+                    <textarea id="question-body" class="form-input form-textarea terminal-effect" placeholder="Descreva seu problema em detalhes. Inclua código, mensagens de erro e o que já tentou." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="question-tags" class="form-label">Tags</label>
+                    <input type="text" id="question-tags" class="form-input terminal-effect" placeholder="javascript, react, nodejs (máx. 5 tags)" required>
+                </div>
+                <button type="submit" class="submit-btn">PUBLICAR PERGUNTA</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Login -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-login-modal">&times;</button>
+            <h2 style="color: var(--neon-blue); margin-bottom: 1.5rem;">Acesse sua conta</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email" class="form-label">E-mail</label>
+                    <input type="email" id="login-email" class="form-input terminal-effect" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password" class="form-label">Senha</label>
+                    <input type="password" id="login-password" class="form-input terminal-effect" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="submit-btn">ENTRAR</button>
+                <p class="login-switch">Não tem conta? <a href="#" id="switch-to-register">Cadastre-se</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Cadastro -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-register-modal">&times;</button>
+            <h2 style="color: var(--neon-blue); margin-bottom: 1.5rem;">Criar nova conta</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username" class="form-label">Nome de usuário</label>
+                    <input type="text" id="register-username" class="form-input terminal-effect" placeholder="@seudominio" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email" class="form-label">E-mail</label>
+                    <input type="email" id="register-email" class="form-input terminal-effect" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password" class="form-label">Senha</label>
+                    <input type="password" id="register-password" class="form-input terminal-effect" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-avatar" class="form-label">Avatar (URL)</label>
+                    <input type="text" id="register-avatar" class="form-input terminal-effect" placeholder="https://..." value="https://i.pravatar.cc/150">
+                </div>
+                <button type="submit" class="submit-btn">CRIAR CONTA</button>
+                <p class="login-switch">Já tem conta? <a href="#" id="switch-to-login">Faça login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Edição de Perfil -->
+    <div class="modal" id="profile-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-profile-modal">&times;</button>
+            <h2 style="color: var(--neon-blue); margin-bottom: 1.5rem;">Editar Perfil</h2>
+            <form id="profile-form">
+                <div class="form-group" style="text-align: center;">
+                    <img src="https://i.pravatar.cc/150?img=3" alt="Avatar" class="avatar" id="profile-avatar" style="width: 80px; height: 80px; margin-bottom: 1rem; cursor: pointer;">
+                    <input type="text" id="profile-avatar-url" class="form-input terminal-effect" placeholder="URL do avatar" value="https://i.pravatar.cc/150?img=3">
+                </div>
+                <div class="form-group">
+                    <label for="profile-username" class="form-label">Nome de usuário</label>
+                    <input type="text" id="profile-username" class="form-input terminal-effect" placeholder="@seudominio" value="@dev_user" required>
+                </div>
+                <div class="form-group">
+                    <label for="profile-email" class="form-label">E-mail</label>
+                    <input type="email" id="profile-email" class="form-input terminal-effect" placeholder="seu@email.com" value="dev@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="profile-bio" class="form-label">Bio</label>
+                    <textarea id="profile-bio" class="form-input form-textarea terminal-effect" placeholder="Conte um pouco sobre você...">Desenvolvedor full-stack apaixonado por JavaScript e soluções inovadoras</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="profile-skills" class="form-label">Habilidades (separadas por vírgula)</label>
+                    <input type="text" id="profile-skills" class="form-input terminal-effect" placeholder="JavaScript, React, Node.js" value="JavaScript, React, Node.js, Python">
+                </div>
+                <button type="submit" class="submit-btn">SALVAR ALTERAÇÕES</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Resposta -->
+    <div class="modal" id="answer-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-answer-modal">&times;</button>
+            <h2 style="color: var(--neon-blue); margin-bottom: 1.5rem;">Responder Pergunta</h2>
+            <div class="question-preview" style="background: rgba(6, 214, 160, 0.1); padding: 1rem; border-radius: 5px; margin-bottom: 1.5rem; border-left: 3px solid var(--neon-blue);">
+                <h3 id="answer-question-title" style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--starship);"></h3>
+                <p id="answer-question-body" style="color: rgba(252, 252, 252, 0.7); font-size: 0.9rem;"></p>
+            </div>
+            <form id="answer-form">
+                <div class="form-group">
+                    <label for="answer-body" class="form-label">Sua Resposta</label>
+                    <textarea id="answer-body" class="form-input form-textarea terminal-effect" placeholder="Escreva sua resposta detalhada aqui..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">ENVIAR RESPOSTA</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Estado da aplicação
+        const state = {
+            currentUser: null,
+            questions: [],
+            answers: [],
+            users: [
+                {
+                    id: 1,
+                    username: "@dev_user",
+                    email: "dev@example.com",
+                    password: "123456",
+                    avatar: "https://i.pravatar.cc/150?img=3",
+                    points: 1024,
+                    bio: "Desenvolvedor full-stack apaixonado por JavaScript e soluções inovadoras",
+                    skills: ["JavaScript", "React", "Node.js", "Python"]
+                }
+            ],
+            tags: ["javascript", "react", "nodejs", "python", "docker", "typescript", "mongodb", "postgresql", "git", "api"]
+        };
+
+        // Elementos do DOM
+        const elements = {
+            questionsFeed: document.getElementById('questions-feed'),
+            questionModal: document.getElementById('question-modal'),
+            loginModal: document.getElementById('login-modal'),
+            registerModal: document.getElementById('register-modal'),
+            profileModal: document.getElementById('profile-modal'),
+            answerModal: document.getElementById('answer-modal'),
+            openQuestionModal: document.getElementById('open-question-modal'),
+            closeQuestionModal: document.getElementById('close-question-modal'),
+            closeLoginModal: document.getElementById('close-login-modal'),
+            closeRegisterModal: document.getElementById('close-register-modal'),
+            closeProfileModal: document.getElementById('close-profile-modal'),
+            closeAnswerModal: document.getElementById('close-answer-modal'),
+            questionForm: document.getElementById('question-form'),
+            loginForm: document.getElementById('login-form'),
+            registerForm: document.getElementById('register-form'),
+            profileForm: document.getElementById('profile-form'),
+            answerForm: document.getElementById('answer-form'),
+            switchToRegister: document.getElementById('switch-to-register'),
+            switchToLogin: document.getElementById('switch-to-login'),
+            userAvatar: document.getElementById('user-avatar'),
+            userPoints: document.getElementById('user-points'),
+            profileAvatar: document.getElementById('profile-avatar'),
+            profileAvatarUrl: document.getElementById('profile-avatar-url'),
+            answerQuestionTitle: document.getElementById('answer-question-title'),
+            answerQuestionBody: document.getElementById('answer-question-body')
+        };
+
+        // Variáveis temporárias
+        let currentQuestionId = null;
+
+        // Funções auxiliares
+        function showNotification(message, type = 'info') {
+            const colors = {
+                info: 'var(--neon-blue)',
+                success: 'var(--matrix-green)',
+                warning: 'var(--cyber-yellow)',
+                error: 'var(--futuristic-pink)'
+            };
+
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.background = colors[type];
+            notification.style.color = 'var(--dark-matter)';
+            notification.style.padding = '15px';
+            notification.style.borderRadius = '5px';
+            notification.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            notification.style.zIndex = '1000';
+            notification.style.display = 'flex';
+            notification.style.alignItems = 'center';
+            notification.style.gap = '10px';
+            notification.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                ${message}
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.transition = 'opacity 0.5s';
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        function openModal(modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function renderQuestions() {
+            elements.questionsFeed.innerHTML = '';
+            
+            if (state.questions.length === 0) {
+                elements.questionsFeed.innerHTML = `
+                    <div class="question-card" style="text-align: center;">
+                        <h3 style="color: var(--neon-blue);">Nenhuma pergunta encontrada</h3>
+                        <p>Seja o primeiro a fazer uma pergunta!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            state.questions.forEach(question => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-card';
+                questionElement.innerHTML = `
+                    <div class="question-header">
+                        <h3 class="question-title">${question.title}</h3>
+                        <div class="question-stats">
+                            <div class="stat">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 20C7.582 20 4 16.418 4 12C4 7.582 7.582 20 12 20C16.418 20 20 16.418 20 12C20 7.582 16.418 4 12 4Z"/>
+                                    <path d="M12 6V12L16 14"/>
+                                </svg>
+                                ${question.timeAgo}
+                            </div>
+                            <div class="stat">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke-width="1.5"/>
+                                    <path d="M12 8V12L15 15" stroke-width="1.5"/>
+                                </svg>
+                                ${question.views} visualizações
+                            </div>
+                        </div>
+                    </div>
+                    <p class="question-body">${question.body}</p>
+                    <div class="question-footer">
+                        <div class="user-info">
+                            <img src="${question.user.avatar}" alt="User" class="avatar" style="width: 30px; height: 30px;">
+                            <span class="username">${question.user.username}</span>
+                        </div>
+                        <div class="question-stats">
+                            <div class="stat">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"/>
+                                    <path d="M8 10L12 14L16 10"/>
+                                </svg>
+                                ${question.answers.length} respostas
+                            </div>
+                            <div class="stat">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"/>
+                                    <path d="M12 8V12L15 15"/>
+                                </svg>
+                                ${question.points} pontos
+                            </div>
+                        </div>
+                    </div>
+                    <div class="answers-section" style="display: ${question.answers.length > 0 ? 'block' : 'none'}">
+                        <h4 class="answers-title">RESPOSTAS</h4>
+                        ${question.answers.map(answer => `
+                            <div class="answer-card">
+                                <div class="answer-header">
+                                    <div class="user-info">
+                                        <img src="${answer.user.avatar}" alt="User" class="avatar" style="width: 25px; height: 25px;">
+                                        <span class="username">${answer.user.username}</span>
+                                    </div>
+                                    <div class="stat">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 20C7.582 20 4 16.418 4 12C4 7.582 7.582 20 12 20C16.418 20 20 16.418 20 12C20 7.582 16.418 4 12 4Z"/>
+                                            <path d="M12 6V12L16 14"/>
+                                        </svg>
+                                        ${answer.timeAgo}
+                                    </div>
+                                </div>
+                                <p class="answer-body">${answer.body}</p>
+                                <div class="answer-footer">
+                                    <button class="action-btn upvote-btn" data-answer-id="${answer.id}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                                        </svg>
+                                        Útil (${answer.upvotes})
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${state.currentUser ? `
+                        <div style="margin-top: 1.5rem;">
+                            <button class="action-btn answer-btn" data-question-id="${question.id}" style="width: 100%;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                Responder
+                            </button>
+                        </div>
+                    ` : ''}
+                `;
+                elements.questionsFeed.appendChild(questionElement);
+            });
+            
+            // Adicionar event listeners aos botões de resposta
+            document.querySelectorAll('.answer-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const questionId = parseInt(e.target.getAttribute('data-question-id'));
+                    openAnswerModal(questionId);
+                });
+            });
+            
+            // Adicionar event listeners aos botões de upvote
+            document.querySelectorAll('.upvote-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const answerId = parseInt(e.target.getAttribute('data-answer-id'));
+                    upvoteAnswer(answerId);
+                });
+            });
+        }
+
+        function openAnswerModal(questionId) {
+            const question = state.questions.find(q => q.id === questionId);
+            if (!question) return;
+            
+            currentQuestionId = questionId;
+            elements.answerQuestionTitle.textContent = question.title;
+            elements.answerQuestionBody.textContent = question.body;
+            openModal(elements.answerModal);
+        }
+
+        function upvoteAnswer(answerId) {
+            if (!state.currentUser) {
+                showNotification('Você precisa estar logado para votar!', 'error');
+                return;
+            }
+            
+            for (const question of state.questions) {
+                const answer = question.answers.find(a => a.id === answerId);
+                if (answer) {
+                    answer.upvotes += 1;
+                    renderQuestions();
+                    showNotification('Resposta votada com sucesso!', 'success');
+                    return;
+                }
+            }
+        }
+
+        function updateUserPanel() {
+            if (state.currentUser) {
+                elements.userAvatar.src = state.currentUser.avatar;
+                elements.userPoints.textContent = state.currentUser.points;
+                elements.openQuestionModal.style.display = 'flex';
+            } else {
+                elements.userAvatar.src = 'https://i.pravatar.cc/150?img=3';
+                elements.userPoints.textContent = '0';
+                elements.openQuestionModal.style.display = 'none';
+            }
+        }
+
+        function generateRandomId() {
+            return Math.floor(Math.random() * 1000000);
+        }
+
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            
+            if (minutes < 1) return 'agora mesmo';
+            if (minutes < 60) return `${minutes} min atrás`;
+            
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours} h atrás`;
+            
+            const days = Math.floor(hours / 24);
+            return `${days} dias atrás`;
+        }
+
+        // Event Listeners
+        elements.openQuestionModal.addEventListener('click', () => {
+            if (!state.currentUser) {
+                openModal(elements.loginModal);
+                showNotification('Faça login para publicar uma pergunta', 'warning');
+                return;
+            }
+            openModal(elements.questionModal);
+        });
+
+        elements.closeQuestionModal.addEventListener('click', () => {
+            closeModal(elements.questionModal);
+        });
+
+        elements.closeLoginModal.addEventListener('click', () => {
+            closeModal(elements.loginModal);
+        });
+
+        elements.closeRegisterModal.addEventListener('click', () => {
+            closeModal(elements.registerModal);
+        });
+
+        elements.closeProfileModal.addEventListener('click', () => {
+            closeModal(elements.profileModal);
+        });
+
+        elements.closeAnswerModal.addEventListener('click', () => {
+            closeModal(elements.answerModal);
+        });
+
+        elements.userAvatar.addEventListener('click', () => {
+            if (state.currentUser) {
+                // Preencher formulário de perfil
+                elements.profileAvatar.src = state.currentUser.avatar;
+                elements.profileAvatarUrl.value = state.currentUser.avatar;
+                document.getElementById('profile-username').value = state.currentUser.username;
+                document.getElementById('profile-email').value = state.currentUser.email;
+                document.getElementById('profile-bio').value = state.currentUser.bio || '';
+                document.getElementById('profile-skills').value = state.currentUser.skills?.join(', ') || '';
+                
+                openModal(elements.profileModal);
+            } else {
+                openModal(elements.loginModal);
+            }
+        });
+
+        elements.switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal(elements.loginModal);
+            openModal(elements.registerModal);
+        });
+
+        elements.switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal(elements.registerModal);
+            openModal(elements.loginModal);
+        });
+
+        elements.profileAvatar.addEventListener('click', () => {
+            const newImg = prompt('Insira a URL da nova imagem de avatar:', elements.profileAvatar.src);
+            if (newImg) {
+                elements.profileAvatar.src = newImg;
+                elements.profileAvatarUrl.value = newImg;
+            }
+        });
+
+        // Formulários
+        elements.loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            const user = state.users.find(u => u.email === email && u.password === password);
+            if (user) {
+                state.currentUser = user;
+                updateUserPanel();
+                closeModal(elements.loginModal);
+                showNotification(`Bem-vindo de volta, ${user.username}!`, 'success');
+                renderQuestions();
+            } else {
+                showNotification('E-mail ou senha incorretos!', 'error');
+            }
+        });
+
+        elements.registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const avatar = document.getElementById('register-avatar').value || 'https://i.pravatar.cc/150';
+            
+            if (state.users.some(u => u.email === email)) {
+                showNotification('Este e-mail já está em uso!', 'error');
+                return;
+            }
+            
+            if (state.users.some(u => u.username === username)) {
+                showNotification('Este nome de usuário já está em uso!', 'error');
+                return;
+            }
+            
+            const newUser = {
+                id: generateRandomId(),
+                username,
+                email,
+                password,
+                avatar,
+                points: 0,
+                bio: '',
+                skills: []
+            };
+            
+            state.users.push(newUser);
+            state.currentUser = newUser;
+            updateUserPanel();
+            closeModal(elements.registerModal);
+            showNotification(`Conta criada com sucesso, ${username}!`, 'success');
+            renderQuestions();
+        });
+
+        elements.profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!state.currentUser) return;
+            
+            const username = document.getElementById('profile-username').value;
+            const email = document.getElementById('profile-email').value;
+            const avatar = document.getElementById('profile-avatar-url').value;
+            const bio = document.getElementById('profile-bio').value;
+            const skills = document.getElementById('profile-skills').value.split(',').map(s => s.trim());
+            
+            // Verificar se o email ou username já existem (exceto para o usuário atual)
+            if (state.users.some(u => u.email === email && u.id !== state.currentUser.id)) {
+                showNotification('Este e-mail já está em uso!', 'error');
+                return;
+            }
+            
+            if (state.users.some(u => u.username === username && u.id !== state.currentUser.id)) {
+                showNotification('Este nome de usuário já está em uso!', 'error');
+                return;
+            }
+            
+            // Atualizar usuário
+            state.currentUser.username = username;
+            state.currentUser.email = email;
+            state.currentUser.avatar = avatar;
+            state.currentUser.bio = bio;
+            state.currentUser.skills = skills;
+            
+            // Atualizar no array de usuários
+            const userIndex = state.users.findIndex(u => u.id === state.currentUser.id);
+            if (userIndex !== -1) {
+                state.users[userIndex] = state.currentUser;
+            }
+            
+            updateUserPanel();
+            closeModal(elements.profileModal);
+            showNotification('Perfil atualizado com sucesso!', 'success');
+        });
+
+        elements.questionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!state.currentUser) return;
+            
+            const title = document.getElementById('question-title').value;
+            const body = document.getElementById('question-body').value;
+            const tags = document.getElementById('question-tags').value.split(',').map(t => t.trim());
+            
+            const newQuestion = {
+                id: generateRandomId(),
+                title,
+                body,
+                tags,
+                user: {
+                    id: state.currentUser.id,
+                    username: state.currentUser.username,
+                    avatar: state.currentUser.avatar
+                },
+                answers: [],
+                points: 0,
+                views: 0,
+                timeAgo: 'agora mesmo',
+                createdAt: new Date()
+            };
+            
+            state.questions.unshift(newQuestion);
+            state.currentUser.points += 10;
+            
+            closeModal(elements.questionModal);
+            elements.questionForm.reset();
+            renderQuestions();
+            updateUserPanel();
+            showNotification('Pergunta publicada com sucesso! +10 pontos', 'success');
+        });
+
+        elements.answerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!state.currentUser || !currentQuestionId) return;
+            
+            const body = document.getElementById('answer-body').value;
+            const question = state.questions.find(q => q.id === currentQuestionId);
+            
+            if (!question) return;
+            
+            const newAnswer = {
+                id: generateRandomId(),
+                body,
+                user: {
+                    id: state.currentUser.id,
+                    username: state.currentUser.username,
+                    avatar: state.currentUser.avatar
+                },
+                upvotes: 0,
+                timeAgo: 'agora mesmo',
+                createdAt: new Date()
+            };
+            
+            question.answers.push(newAnswer);
+            state.currentUser.points += 5;
+            
+            closeModal(elements.answerModal);
+            elements.answerForm.reset();
+            renderQuestions();
+            updateUserPanel();
+            showNotification('Resposta publicada com sucesso! +5 pontos', 'success');
+        });
+
+        // Inicialização
+        function init() {
+            // Adicionar algumas perguntas de exemplo
+            state.questions = [
+                {
+                    id: 1,
+                    title: "Como implementar autenticação JWT com refresh tokens em Node.js?",
+                    body: "Estou desenvolvendo uma API em Node.js e preciso implementar um sistema de autenticação seguro usando JWT. Quero adicionar refresh tokens para melhorar a segurança, mas não sei qual a melhor abordagem. Alguém tem um exemplo completo de como implementar isso com boas práticas?",
+                    tags: ["nodejs", "jwt", "authentication"],
+                    user: {
+                        id: 2,
+                        username: "@novato_dev",
+                        avatar: "https://i.pravatar.cc/150?img=5"
+                    },
+                    answers: [
+                        {
+                            id: 1,
+                            body: "Recomendo usar a biblioteca jsonwebtoken junto com redis para armazenar os refresh tokens. Aqui está um exemplo básico...",
+                            user: {
+                                id: 3,
+                                username: "@experto_jwt",
+                                avatar: "https://i.pravatar.cc/150?img=11"
+                            },
+                            upvotes: 8,
+                            timeAgo: "2 horas atrás",
+                            createdAt: new Date(Date.now() - 7200000)
+                        }
+                    ],
+                    points: 32,
+                    views: 15,
+                    timeAgo: "3 horas atrás",
+                    createdAt: new Date(Date.now() - 10800000)
+                },
+                {
+                    id: 2,
+                    title: "Qual a diferença entre useEffect, useMemo e useCallback no React?",
+                    body: "Estou aprendendo React Hooks e estou confuso sobre quando usar cada um desses hooks. Parecem similares mas devem ter propósitos diferentes. Alguém pode explicar com exemplos práticos quando devo usar cada um?",
+                    tags: ["react", "hooks", "javascript"],
+                    user: {
+                        id: 4,
+                        username: "@react_learner",
+                        avatar: "https://i.pravatar.cc/150?img=8"
+                    },
+                    answers: [
+                        {
+                            id: 2,
+                            body: "useEffect é para efeitos colaterais (como chamadas API), useMemo para memoizar valores calculados e useCallback para memoizar funções. Exemplo: ...",
+                            user: {
+                                id: 5,
+                                username: "@react_pro",
+                                avatar: "https://i.pravatar.cc/150?img=9"
+                            },
+                            upvotes: 12,
+                            timeAgo: "1 hora atrás",
+                            createdAt: new Date(Date.now() - 3600000)
+                        },
+                        {
+                            id: 3,
+                            body: "Uma regra simples: use useEffect quando precisar sincronizar com algo externo, useMemo para cálculos caros e useCallback quando passar funções como props para componentes filhos.",
+                            user: {
+                                id: 6,
+                                username: "@hooks_master",
+                                avatar: "https://i.pravatar.cc/150?img=10"
+                            },
+                            upvotes: 5,
+                            timeAgo: "45 minutos atrás",
+                            createdAt: new Date(Date.now() - 2700000)
+                        }
+                    ],
+                    points: 64,
+                    views: 87,
+                    timeAgo: "5 horas atrás",
+                    createdAt: new Date(Date.now() - 18000000)
+                }
+            ];
+            
+            // Atualizar timeAgo para todas as perguntas e respostas
+            state.questions.forEach(question => {
+                question.timeAgo = getTimeAgo(question.createdAt);
+                question.answers.forEach(answer => {
+                    answer.timeAgo = getTimeAgo(answer.createdAt);
+                });
+            });
+            
+            renderQuestions();
+            updateUserPanel();
+            
+            // Simular usuário logado para teste (remova isso em produção)
+            // state.currentUser = state.users[0];
+            // updateUserPanel();
+        }
+
+        init();
+    </script>
+</body>
+</html>
