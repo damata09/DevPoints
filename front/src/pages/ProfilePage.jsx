@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { getCurrentUser, updateProfile } from '../services/userService';
 import '../styles/main.css';
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState({
-    avatar: 'https://i.pravatar.cc/150?img=3',
+    avatar: '',
     username: '',
     email: '',
     bio: '',
@@ -11,50 +12,42 @@ const ProfilePage = () => {
   });
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('devpoints_currentUser'));
-    if (user) {
-      setProfile({
-        avatar: user.avatar,
-        username: user.username,
-        email: user.email,
-        bio: user.bio || '',
-        skills: (user.skills || []).join(', ')
-      });
-    }
+    const fetchProfile = async () => {
+      try {
+        const user = await getCurrentUser();
+        setProfile({
+          avatar: user.avatar || '',
+          username: user.username || '',
+          email: user.email || '',
+          bio: user.bio || '',
+          skills: (user.skills || []).join(', ')
+        });
+      } catch (err) {
+        alert('Erro ao carregar perfil. Verifique sua conexão.');
+      }
+    };
+
+    fetchProfile();
   }, []);
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const allUsers = JSON.parse(localStorage.getItem('devpoints_users')) || [];
-    const currentUser = JSON.parse(localStorage.getItem('devpoints_currentUser'));
+    try {
+      const updated = {
+        ...profile,
+        skills: profile.skills.split(',').map((s) => s.trim())
+      };
 
-    // Verifica conflitos
-    if (
-      allUsers.some(
-        (u) => (u.email === profile.email || u.username === profile.username) && u.id !== currentUser.id
-      )
-    ) {
-      alert('E-mail ou nome de usuário já estão em uso.');
-      return;
+      const res = await updateProfile(updated);
+      localStorage.setItem('devpoints_currentUser', JSON.stringify(res)); // opcional: sincronizar local
+      alert('Perfil atualizado com sucesso!');
+    } catch (err) {
+      alert('Erro ao atualizar perfil. Tente novamente.');
     }
-
-    const updatedUser = {
-      ...currentUser,
-      ...profile,
-      skills: profile.skills.split(',').map((s) => s.trim())
-    };
-
-    // Atualiza localStorage
-    const index = allUsers.findIndex((u) => u.id === currentUser.id);
-    allUsers[index] = updatedUser;
-
-    localStorage.setItem('devpoints_users', JSON.stringify(allUsers));
-    localStorage.setItem('devpoints_currentUser', JSON.stringify(updatedUser));
-    alert('Perfil atualizado com sucesso!');
   };
 
   return (

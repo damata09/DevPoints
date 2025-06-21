@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/main.css'; // reutiliza o estilo que você já tem
+import { login } from '../services/authService';
+import '../styles/main.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    // Lógica temporária de autenticação mock
-    const storedUsers = JSON.parse(localStorage.getItem('devpoints_users')) || [];
-    const user = storedUsers.find((u) => u.email === email && u.password === password);
-
-    if (user) {
-      localStorage.setItem('devpoints_currentUser', JSON.stringify(user));
-      alert(`Bem-vindo, ${user.username}!`);
+    try {
+      const res = await login(email, password);
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('devpoints_currentUser', JSON.stringify(res.user));
+      alert(`Bem-vindo, ${res.user.username}!`);
       navigate('/');
-    } else {
-      alert('E-mail ou senha inválidos');
+    } catch (err) {
+      alert('Login inválido!');
     }
   };
 
   return (
     <div className="modal active" style={{ position: 'relative', top: 0 }}>
       <div className="modal-content">
-        <h2 style={{ color: 'var(--neon-blue)', marginBottom: '1.5rem' }}>Acesse sua conta</h2>
+        <h2 style={{ color: 'var(--neon-blue)', marginBottom: '1.5rem' }}>
+          Acesse sua conta
+        </h2>
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label htmlFor="login-email" className="form-label">E-mail</label>

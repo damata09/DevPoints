@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createQuestion } from '../services/questionService';
 import '../styles/main.css';
 
 const NewQuestionPage = () => {
@@ -8,34 +9,29 @@ const NewQuestionPage = () => {
   const [tags, setTags] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const currentUser = JSON.parse(localStorage.getItem('devpoints_currentUser'));
-    if (!currentUser) {
-      alert('Você precisa estar logado para publicar uma pergunta!');
-      navigate('/login');
-      return;
+    try {
+      const user = JSON.parse(localStorage.getItem('devpoints_currentUser'));
+      if (!user) {
+        alert('Você precisa estar logado para publicar uma pergunta!');
+        navigate('/login');
+        return;
+      }
+
+      const questionData = {
+        title,
+        body,
+        tags: tags.split(',').map((tag) => tag.trim())
+      };
+
+      const res = await createQuestion(questionData);
+      alert('Pergunta publicada com sucesso!');
+      navigate(`/questions/${res.id}`); // Redireciona pra visualização da pergunta criada
+    } catch (err) {
+      alert('Erro ao publicar a pergunta. Tente novamente.');
     }
-
-    const question = {
-      id: Date.now(),
-      title,
-      body,
-      tags: tags.split(',').map((t) => t.trim()),
-      user: currentUser,
-      timeAgo: 'agora mesmo',
-      views: 0,
-      points: 0,
-      answers: []
-    };
-
-    const allQuestions = JSON.parse(localStorage.getItem('devpoints_questions')) || [];
-    allQuestions.unshift(question);
-    localStorage.setItem('devpoints_questions', JSON.stringify(allQuestions));
-
-    alert('Pergunta publicada com sucesso!');
-    navigate('/questions');
   };
 
   return (
@@ -49,7 +45,7 @@ const NewQuestionPage = () => {
               type="text"
               id="title"
               className="form-input terminal-effect"
-              placeholder="Seja específico (ex: 'Erro ao compilar React com Webpack')"
+              placeholder="Descreva sua dúvida com clareza"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -60,19 +56,19 @@ const NewQuestionPage = () => {
             <textarea
               id="body"
               className="form-input form-textarea terminal-effect"
-              placeholder="Descreva seu problema em detalhes. Inclua código, mensagens de erro e o que já tentou."
+              placeholder="Explique o problema, mostre código, diga o que já tentou..."
               value={body}
               onChange={(e) => setBody(e.target.value)}
               required
             />
           </div>
           <div className="form-group">
-            <label htmlFor="tags" className="form-label">Tags</label>
+            <label htmlFor="tags" className="form-label">Tags (separadas por vírgula)</label>
             <input
               type="text"
               id="tags"
               className="form-input terminal-effect"
-              placeholder="javascript, react, nodejs"
+              placeholder="react, javascript, api"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
             />

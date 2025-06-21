@@ -1,11 +1,11 @@
 import React, {
   createContext,
   useState,
-  useEffect,
+  useEffect,  
   useCallback
 } from 'react';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
       setAuthState(prev => ({ ...prev, loading: true }));
       axios.defaults.headers.common['Authorization'] = `Bearer ${authState.token}`;
       try {
-        const decoded = jwt_decode(authState.token);
+   const decoded = jwtDecode(authState.token);
         getUserData(decoded.user.id);
       } catch (err) {
         logout();

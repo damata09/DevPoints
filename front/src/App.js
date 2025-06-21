@@ -9,7 +9,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import QuestionsPage from './pages/QuestionsPage';
+import QuestionPage from './pages/QuestionPage';
 import QuestionDetailPage from './pages/QuestionDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import LeaderboardPage from './pages/LeaderboardPage';
@@ -40,7 +40,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/questions" element={<QuestionsPage />} />
+            <Route path="/questions" element={<QuestionPage />} />
             <Route path="/questions/:id" element={<QuestionDetailPage />} />
             <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
             <Route path="/leaderboard" element={<LeaderboardPage />} />

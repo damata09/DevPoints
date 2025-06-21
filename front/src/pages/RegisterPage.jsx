@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { register } from '../services/authService';
 import '../styles/main.css';
 
 const RegisterPage = () => {
@@ -16,33 +17,17 @@ const RegisterPage = () => {
     setForm({ ...form, [e.target.id]: e.target.value });
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem('devpoints_users')) || [];
-
-    if (users.some(u => u.email === form.email)) {
-      alert('Este e-mail já está em uso!');
-      return;
+    try {
+      const res = await register(form);
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('devpoints_currentUser', JSON.stringify(res.user));
+      alert(`Conta criada com sucesso, ${res.user.username}!`);
+      navigate('/');
+    } catch (err) {
+      alert('Erro ao registrar. Verifique os dados ou tente outro e-mail/usuário.');
     }
-
-    if (users.some(u => u.username === form.username)) {
-      alert('Este nome de usuário já está em uso!');
-      return;
-    }
-
-    const newUser = {
-      ...form,
-      id: Date.now(),
-      points: 0,
-      bio: '',
-      skills: []
-    };
-
-    users.push(newUser);
-    localStorage.setItem('devpoints_users', JSON.stringify(users));
-    localStorage.setItem('devpoints_currentUser', JSON.stringify(newUser));
-    alert(`Conta criada com sucesso, ${newUser.username}!`);
-    navigate('/');
   };
 
   return (
@@ -51,7 +36,7 @@ const RegisterPage = () => {
         <h2 style={{ color: 'var(--neon-blue)', marginBottom: '1.5rem' }}>Criar nova conta</h2>
         <form onSubmit={handleRegister}>
           <div className="form-group">
-            <label htmlFor="register-username" className="form-label">Nome de usuário</label>
+            <label htmlFor="username" className="form-label">Nome de usuário</label>
             <input
               type="text"
               id="username"
@@ -63,7 +48,7 @@ const RegisterPage = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="register-email" className="form-label">E-mail</label>
+            <label htmlFor="email" className="form-label">E-mail</label>
             <input
               type="email"
               id="email"
@@ -75,7 +60,7 @@ const RegisterPage = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="register-password" className="form-label">Senha</label>
+            <label htmlFor="password" className="form-label">Senha</label>
             <input
               type="password"
               id="password"
@@ -87,7 +72,7 @@ const RegisterPage = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="register-avatar" className="form-label">Avatar (URL)</label>
+            <label htmlFor="avatar" className="form-label">Avatar (URL)</label>
             <input
               type="text"
               id="avatar"

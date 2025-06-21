@@ -1,12 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
+import { getQuestionById, submitAnswer } from '../services/questionService';
 import '../styles/main.css';
 
 const QuestionDetailPage = () => {
   const { id } = useParams();
-  const questions = JSON.parse(localStorage.getItem('devpoints_questions')) || [];
-  const question = questions.find((q) => q.id.toString() === id);
+  const [question, setQuestion] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [newAnswer, setNewAnswer] = useState('');
+  const user = JSON.parse(localStorage.getItem('devpoints_currentUser'));
+
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      try {
+        const data = await getQuestionById(id);
+        setQuestion(data);
+      } catch (err) {
+        alert('Erro ao carregar a pergunta.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuestion();
+  }, [id]);
+
+  const handleSubmitAnswer = async (e) => {
+    e.preventDefault();
+    try {
+      if (!newAnswer.trim()) return;
+
+      const data = {
+        body: newAnswer
+      };
+
+      const updated = await submitAnswer(id, data);
+      setQuestion(updated);
+      setNewAnswer('');
+    } catch (err) {
+      alert('Erro ao enviar resposta.');
+    }
+  };
+
+  if (loading) {
+    return <div className="container"><p>Carregando pergunta...</p></div>;
+  }
 
   if (!question) {
     return (
@@ -38,7 +77,7 @@ const QuestionDetailPage = () => {
 
         <div className="answers-section">
           <h4 className="answers-title">RESPOSTAS</h4>
-          {question.answers.length > 0 ? (
+          {question.answers && question.answers.length > 0 ? (
             question.answers.map((a) => (
               <div key={a.id} className="answer-card">
                 <div className="answer-header">
@@ -53,6 +92,21 @@ const QuestionDetailPage = () => {
             ))
           ) : (
             <p style={{ color: 'rgba(252, 252, 252, 0.7)' }}>Nenhuma resposta ainda.</p>
+          )}
+
+          {user && (
+            <form onSubmit={handleSubmitAnswer} style={{ marginTop: '1.5rem' }}>
+              <textarea
+                className="form-input form-textarea terminal-effect"
+                placeholder="Digite sua resposta aqui..."
+                value={newAnswer}
+                onChange={(e) => setNewAnswer(e.target.value)}
+                required
+              />
+              <button type="submit" className="submit-btn" style={{ marginTop: '1rem' }}>
+                ENVIAR RESPOSTA
+              </button>
+            </form>
           )}
         </div>
       </div>

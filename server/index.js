@@ -1,5 +1,8 @@
+import cors from 'cors';
+ // permite todas as origens
 const express = require('express');
 const app = express();
+app.use(cors());
 const usuarioRoutes = require('./routes/usuarioRoutes');
 require('dotenv').config();
 
