@@ -2,19 +2,19 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import AuthContextProvider from './context/AuthContext';
+import AuthContextProvider from '../../front/src/context/AuthContext';
 import PrivateRoute from './components/routing/PrivateRoute';
 
 // Pages
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import QuestionsPage from './pages/QuestionsPage';
-import QuestionDetailPage from './pages/QuestionDetailPage';
-import ProfilePage from './pages/ProfilePage';
-import LeaderboardPage from './pages/LeaderboardPage';
-import RewardsPage from './pages/RewardsPage';
-import NotFoundPage from './pages/NotFoundPage';
+import HomePage from '../../front/src/pages/HomePage';
+import LoginPage from '../../front/src/pages/LoginPage';
+import RegisterPage from '../../front/src/pages/RegisterPage';
+import QuestionsPage from '../../front/src/pages/QuestionsPage';
+import QuestionDetailPage from '../../front/src/pages/QuestionDetailPage';
+import ProfilePage from '../../front/src/pages/ProfilePage';
+import LeaderboardPage from '../../front/src/pages/LeaderboardPage';
+import RewardsPage from '../../front/src/pages/RewardsPage';
+import NotFoundPage from '../../front/src/pages/NotFoundPage';
 
 const theme = createTheme({
   palette: {
@@ -50,6 +50,7 @@ function App() {
         </BrowserRouter>
       </AuthContextProvider>
     </ThemeProvider>
+    
   );
 }
 
